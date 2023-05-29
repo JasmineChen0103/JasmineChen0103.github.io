@@ -1,0 +1,44 @@
+/* body標籤裡的字型都是Arial */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* button特效 */
+#button_1 {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#button_2 {
+    background-color: #c13838;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+/* h1標籤裡顏色為黑，粗體字 */
+h1 {
+    color: black;
+    font-weight: bold;
+}
+
+/* hr特效 */
+hr {
+    border-top: 2px dashed rgb(7, 6, 6);
+}
+
+li {
+    color: blue;
+    text-decoration: underline;
+}

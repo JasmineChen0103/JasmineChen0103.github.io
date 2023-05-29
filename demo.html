@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="mystyle.css">
+    <title>BINGOBINGO</title>
+
+    <script>
+
+        function getRandom(x) {
+            return Math.floor(Math.random() * x) + 1;
+        };
+
+        function luckynum() {
+            var status = [];
+            while (status.length < 3) {
+                var n = getRandom(10);
+                if (status.indexOf(n) !== -1) {
+                    continue;
+                }
+                status.push(n);
+            }
+            return status;
+        };
+
+        let success = false;
+
+        function StartTheGame() {
+            var first_guess = parseInt(document.getElementById("first_guess").value);
+            var second_guess = parseInt(document.getElementById("second_guess").value);
+            var third_guess = parseInt(document.getElementById("third_guess").value);
+
+            // (5) 具備輸入檢查功能，若使用者輸入的內容非有效數值或者重複的數字，按下開獎按鈕後會跳出警告訊息，並觸發重新開始(reset)功能 
+
+            if (isNaN(first_guess) || isNaN(second_guess) || isNaN(third_guess)) {
+                alert("請輸入有效數字!");
+                RestartTheGame();
+                return;
+            }
+
+            if (first_guess < 1 || first_guess > 10 || second_guess < 1 || second_guess > 10 || third_guess < 1 || third_guess > 10) {
+                alert("請輸入有效數字!(1~10)");
+                RestartTheGame();
+                return;
+            }
+
+            if (first_guess === second_guess || second_guess === third_guess || first_guess === third_guess) {
+                alert("數字請不要重複");
+                RestartTheGame();
+                return;
+            }
+            var userNumber = [first_guess, second_guess, third_guess]
+            var correctNumber = luckynum();
+            var count = 0;
+
+            for (i = 0; i < userNumber.length; i++) {
+                if (correctNumber.includes(userNumber[i])) {
+                    count++;
+                }
+            }
+
+            // (2) 三個獎項皆設有不同金額的中獎獎金(金額為自訂之正整數)，當使用者按下開獎按鈕後網頁上會顯示中獎或沒中獎的訊息，若有中獎還會額外顯示獎項和獎金金額
+
+            var result = "";
+
+            if (count == 3) {
+                result = "恭喜您獲得頭獎!獎金1000元";
+            }
+            else if (count == 2) {
+                result = "恭喜您獲得貳獎!獎金500元";
+            }
+            else if (count == 1) {
+                result = "恭喜您獲得參獎!獎金100元";
+            }
+            else {
+                result = "您完美地避開了所有正確數字，按下重新開始，再挑戰一次!";
+            }
+
+            document.getElementById("correctNumber").innerHTML = "正確號碼為:" + correctNumber;
+            document.getElementById("result").innerHTML = result;
+
+        }
+
+        // (4) 具備重新開始(reset)功能的按鈕，讓使用者可以進行全新一輪的遊戲 (重新亂數產生得獎號碼並清空舊訊息)
+        function RestartTheGame() {
+            document.getElementById("first_guess").value = "";
+            document.getElementById("second_guess").value = "";
+            document.getElementById("third_guess").value = "";
+            document.getElementById("correctNumber").innerHTML = "";
+            document.getElementById("result").innerHTML = "";
+        }
+    </script>
+</head>
+<!-- (3) 網頁中使用了 5 種不同的 CSS 語法所設計的特效，相關語法敘述皆須置於名稱為 "mystyle.css" 的檔案中 1.body標籤裡的字型都是Arial 2.button特效 3.h1標籤裡顏色為黑，粗體字 4.hr特效 5.li特效-->
+<!-- (1) 使用 JS 設計一個樂透遊戲並在網頁中以文字說明遊戲規則，使用者可在網頁上自行輸入 3 個號碼 (範圍是數字 1~10)；每次開始遊戲時會亂數產生 3 個得獎號碼 (範圍是數字 1~10 不重複)；當使用者輸入 3 個號碼並按下開獎按鈕後，會開始比對輸入的號碼及得獎號碼 (不管排列先後順序)，全部對中時為頭獎、2 個號碼對中為貳獎、1 個號碼對中為參獎 -->
+
+<body>
+    <div>
+        <h1>Welcome to Lotto Game</h1>
+        <hr>
+        <ol>
+            <li>您可以在下方的輸入框中輸入三個數字，每個數字的範圍必須在1到10之間（包含1和10）</li>
+            <li>在遊戲開始時，我們將隨機產生三個得獎號碼，這些號碼也將在1到10的範圍內（不會重複）。</li>
+            <li>當您輸入完三個號碼後，請按下「開獎」按鈕，我們將開始比對您輸入的號碼與得獎號碼（不論排列順序）。</li>
+            <li>如果您成功猜中全部三個號碼，恭喜您獲得頭獎！</li>
+            <li>如果您成功猜中兩個號碼，您將獲得貳獎！</li>
+            <li>如果您成功猜中其中一個號碼，您將獲得參獎！</li>
+            <li>如果您的輸入號碼完全不符合得獎號碼，很抱歉，您將沒有獲得獎項。</li>
+            <li>您可以多次進行遊戲，嘗試提高自己的中獎機會。</li>
+        </ol>
+        <h2>祝您好運，開始享受這個刺激有趣的遊戲吧！</h2>
+
+        <label>請輸入您選擇的第一個幸運數字</label>
+        <input id="first_guess" type="text" value="" />
+        <br>
+        <label>請輸入您選擇的第二個幸運數字</label>
+        <input id="second_guess" type="text" value="" />
+        <br>
+        <label>請輸入您選擇的第三個幸運數字</label>
+        <input id="third_guess" type="text" value="" />
+        <br><br>
+        <button id=button_1 onclick="StartTheGame()">開獎</button>
+        <button id=button_2 onclick="RestartTheGame()">重新開始</button>
+        <p id="correctNumber"></p>
+        <p id="result"></p>
+
+    </div>
+</body>
+
+</html>
